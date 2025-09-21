@@ -2,13 +2,14 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import contextily as ctx
 
-# Load the GeoJSON
-gdf = gpd.read_file("data/boundary/SquareBoundarySS.geojson")
+bici = gpd.read_file('data/geopackages/bike_edges.gpkg')
 
-# Convert to Web Mercator (required by contextily basemaps)
-gdf_webmerc = gdf.to_crs(epsg=3857)
+drive = gpd.read_file('data/geopackages/drive_edges.gpkg')
 
-# Plot
-ax = gdf_webmerc.plot(edgecolor="red", facecolor="none", linewidth=2, figsize=(8, 8))
-ctx.add_basemap(ax, source=ctx.providers.OpenStreetMap.Mapnik)  # OSM basemap
-plt.show()
+walk = gpd.read_file('data/geopackages/walk_edges.gpkg')
+
+building = gpd.read_file('data/geopackages/buildings-small.gpkg')
+
+
+
+
