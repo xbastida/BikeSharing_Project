@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "bikesharing-project"
 version = "0.1.0"
@@ -16,6 +20,11 @@ dependencies = [
     "scikit-learn>=1.7.2",
     "shapely>=2.1.1",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["utils*"]
+exclude = ["data*", "cache*", "Preliminary_investigation*"]
 
 [dependency-groups]
 dev = [

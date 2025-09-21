@@ -4,9 +4,14 @@ import networkx as nx
 import numpy as np
 import folium
 
-def distances_to_bikelanes(bike_gpkg, points_gpkg,
-                           bike_layer="bike", points_layer="points",
-                           output_html="map.html"):
+
+def distances_to_bikelanes(
+    bike_gpkg,
+    points_gpkg,
+    bike_layer="bike",
+    points_layer="points",
+    output_html="map.html",
+):
     """
     Compute network distances from points to the nearest bike lane,
     using OSMnx's walking network for Donostia-San Sebastián,
@@ -17,7 +22,9 @@ def distances_to_bikelanes(bike_gpkg, points_gpkg,
     gdf_bike = gpd.read_file(bike_gpkg, layer=bike_layer).to_crs(epsg=25830)
     gdf_points = gpd.read_file(points_gpkg, layer=points_layer).to_crs(epsg=25830)
 
-    gdf_points = gdf_points[~gdf_points.geometry.is_empty & gdf_points.geometry.notna()].copy()
+    gdf_points = gdf_points[
+        ~gdf_points.geometry.is_empty & gdf_points.geometry.notna()
+    ].copy()
     import numpy as np
 
     gdf_points = gdf_points[
@@ -40,8 +47,11 @@ def distances_to_bikelanes(bike_gpkg, points_gpkg,
 
     # 4. Gather bike-lane vertices → nearest graph nodes (vectorized)
     exploded = gdf_bike.explode(index_parts=False)
-    coords_list = [np.array(geom.coords) for geom in exploded.geometry
-                   if geom is not None and not geom.is_empty]
+    coords_list = [
+        np.array(geom.coords)
+        for geom in exploded.geometry
+        if geom is not None and not geom.is_empty
+    ]
     if not coords_list:
         raise ValueError("No coordinate vertices found in bike lane geometries.")
     bike_coords = np.vstack(coords_list)
@@ -49,7 +59,9 @@ def distances_to_bikelanes(bike_gpkg, points_gpkg,
     bike_nodes = np.unique(bike_nodes).tolist()  # list of ints
 
     # 5. Multi-source Dijkstra → distances and paths
-    dist_dict, path_dict = nx.multi_source_dijkstra(G, sources=bike_nodes, weight="length")
+    dist_dict, path_dict = nx.multi_source_dijkstra(
+        G, sources=bike_nodes, weight="length"
+    )
 
     # 6. Distances for each point node
     gdf_points["dist_to_bike_m"] = [dist_dict.get(n, float("nan")) for n in point_nodes]
@@ -68,8 +80,9 @@ def distances_to_bikelanes(bike_gpkg, points_gpkg,
         center_lat = float(u.centroid.y)
         center_lon = float(u.centroid.x)
 
-    m = folium.Map(location=[center_lat, center_lon],
-                   zoom_start=13, tiles="cartodbpositron")
+    m = folium.Map(
+        location=[center_lat, center_lon], zoom_start=13, tiles="cartodbpositron"
+    )
 
     # 8. Draw bike lanes
     folium.GeoJson(
@@ -97,15 +110,16 @@ def distances_to_bikelanes(bike_gpkg, points_gpkg,
             fill=True,
             fill_color="#33a02c",
             fill_opacity=0.9,
-            popup=text,      # click shows info
-            tooltip=text,    # hover shows info
+            popup=text,  # click shows info
+            tooltip=text,  # hover shows info
         ).add_to(m)
-
 
         # Path line
         path_nodes = path_dict.get(node)
         if path_nodes:
-            coords = [(G_ll.nodes[n]["y"], G_ll.nodes[n]["x"]) for n in path_nodes[::-1]]
+            coords = [
+                (G_ll.nodes[n]["y"], G_ll.nodes[n]["x"]) for n in path_nodes[::-1]
+            ]
             folium.PolyLine(
                 locations=coords,
                 color="#e31a1c",

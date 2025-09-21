@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+bikesharing_project.egg-info/PKG-INFO
+bikesharing_project.egg-info/SOURCES.txt
+bikesharing_project.egg-info/dependency_links.txt
+bikesharing_project.egg-info/requires.txt
+bikesharing_project.egg-info/top_level.txt
+utils/Distance_to_bikelane.py
+utils/Plot_gpkg.py
+utils/__init__.py

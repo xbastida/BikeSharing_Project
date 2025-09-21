@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: bikesharing-project
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: folium>=0.20.0
+Requires-Dist: geopandas>=1.1.1
+Requires-Dist: ipykernel>=6.30.1
+Requires-Dist: matplotlib>=3.10.6
+Requires-Dist: networkx>=3.5
+Requires-Dist: numpy>=2.3.3
+Requires-Dist: osmnx>=2.0.6
+Requires-Dist: pyproj>=3.7.2
+Requires-Dist: scikit-learn>=1.7.2
+Requires-Dist: shapely>=2.1.1

@@ -45,7 +45,7 @@ wheels = [
 [[package]]
 name = "bikesharing-project"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "folium" },
     { name = "geopandas" },

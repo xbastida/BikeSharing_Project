@@ -1,10 +1,14 @@
 import sys
-sys.path.insert(0, r"D:\BikeSharing_Project\utils")
-from Plot_gpkg import plot_layer_from_gpkg
+from pathlib import Path
+
+actual_folder_path = Path(__file__).parent
+project_root = Path(__file__).parent.parent
+sys.path.insert(0,str(project_root))
+from utils.Plot_gpkg import plot_layer_from_gpkg
 
 
-gpkg_path = r"D:\Proyecto_auxiliares\Proyecto_learn\bike_edges.gpkg"
-layer_name = "bike"
-output_html = r"data/geopackages/yessir.html"
+gpkg_path = actual_folder_path / "drive_edges.gpkg"
+layer_name = "drive"
+output_html = actual_folder_path / "driving_roads.html"
 
 k = plot_layer_from_gpkg(gpkg_path, layer_name, output_html)
